@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title>Students</title>
+</head>
+
+<body>
+    <h1 th:text="#{pages.students.title}"> titulo </h1>
+    <h1> Titulo de la página: [[#{pages.students.title}]] </h1>
+
+    <a th:href="@{/students/new}">Create new student</a>
+    <div th:if="${students != null and !students.empty}">
+        <table id="studentsTable" class="display">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        FIRST NAME
+                    </th>
+                    <th>
+                        LAST NAME
+                    </th>
+                    <th>
+                        EMAIL
+                    </th>
+                    <th>
+                        CREATION DATE
+                    </th>
+                    <th>
+                        EDIT
+                    </th>
+                    <th>
+                        DELETE
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.studentId}"></td>
+                    <td th:text="${student.firstName}"></td>
+                    <td th:text="${student.lastName}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.creationDate}"></td>
+                    <td>
+                        <a th:href="@{/students/edit/} + ${student.studentId}">Edit</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/students/delete/} + ${student.studentId}">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${students == null or students.empty}">
+        No students found
+    </div>
+
+</body>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+<script>
+    let table = new DataTable('#studentsTable', {
+        // options
+    });
+</script>
+
+</html>
